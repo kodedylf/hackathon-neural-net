@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace Hackathon
         public static double GetDouble(string[][] data, string column, int row)
         {
             var columnNumber = Array.IndexOf(data[0], column);
-            return string.IsNullOrEmpty(data[row][columnNumber]) ? 0.0 : double.Parse(data[row][columnNumber]);
+            return string.IsNullOrEmpty(data[row][columnNumber]) ? 0.0 : double.Parse(data[row][columnNumber], CultureInfo.InvariantCulture);
         }
 
         public static string GetString(string[][] data, string column, int row)
@@ -72,18 +73,37 @@ namespace Hackathon
                 inputs.Add(Math.Min(1.0, ((double)GetDouble(data, "DEBT_CURRENT_REPAYMENT", i)) / 2000000));
 
 
+                // calculated values
+                inputs.Add(((double)GetDouble(data, "ASSET_TOTAL", i)) / 1000000);
+                inputs.Add(((double)GetDouble(data, "DEBT_FACTOR", i)) / 7.0);
+                inputs.Add(((double)GetDouble(data, "FCF", i)) / 30000.00);
+                inputs.Add(((double)GetDouble(data, "FFCF", i)) / 30000.00);
+
                 // calculated ratios
-                inputs.Add(Math.Min(1.0, GetDouble(data, "INCOME_CONCENTRATION_HHI", i)));
-                inputs.Add(Math.Min(1.0, GetDouble(data, "ASSETS_LIQUID_TO_ASSETS_TOTAL", i)));
-                inputs.Add(Math.Min(1.0, GetDouble(data, "ASSETS_PROPERTY_TO_ASSETS_TOTAL", i)));
-                inputs.Add(Math.Min(1.0, GetDouble(data, "DEBT_TOTAL_TO_ASSETS_TOTAL", i) / 10000.0));
-                inputs.Add(Math.Max(0.0, Math.Min(1.0, GetDouble(data, "DEBT_TOTAL_TO_NET_EQUITY", i))));
-                inputs.Add(Math.Min(1.0, GetDouble(data, "DEBT_OTHER_TO_DEBT_TOTAL", i)));
-                inputs.Add(Math.Min(1.0, GetDouble(data, "DEBT_OTHER_TO_INCOME_TOTAL", i) / 10000.0));
-                inputs.Add(Math.Min(1.0, GetDouble(data, "FFCF_TO_ASSET_TOTAL", i) / 50000.0));
-                inputs.Add(Math.Min(1.0, GetDouble(data, "FFCF_TO_DEBT_TOTAL", i) * 10.0));
-                inputs.Add(Math.Min(1.0, GetDouble(data, "FFCF_TO_INCOME_TOTAL", i)));
-                inputs.Add(Math.Min(1.0, GetDouble(data, "EXPENSES_PROPERTY_TO_EXPENES_TOTAL", i)));
+                inputs.Add(GetDouble(data, "INCOME_CONCENTRATION_HHI", i));
+                inputs.Add(GetDouble(data, "ASSETS_LIQUID_TO_ASSETS_TOTAL", i));
+                inputs.Add(GetDouble(data, "ASSETS_PROPERTY_TO_ASSETS_TOTAL", i));
+                inputs.Add(GetDouble(data, "DEBT_TOTAL_TO_ASSETS_TOTAL", i) / 10000.0);
+                inputs.Add(GetDouble(data, "DEBT_TOTAL_TO_NET_EQUITY", i));
+                inputs.Add(GetDouble(data, "DEBT_OTHER_TO_DEBT_TOTAL", i));
+                inputs.Add(GetDouble(data, "DEBT_OTHER_TO_INCOME_TOTAL", i) / 10000.0);
+                inputs.Add(GetDouble(data, "FFCF_TO_ASSET_TOTAL", i) / 50000.0);
+                inputs.Add(GetDouble(data, "FFCF_TO_DEBT_TOTAL", i) * 10.0);
+                inputs.Add(GetDouble(data, "FFCF_TO_INCOME_TOTAL", i));
+                inputs.Add(GetDouble(data, "EXPENSES_PROPERTY_TO_EXPENES_TOTAL", i));
+                inputs.Add(GetDouble(data, "INCOME_CHILD_TO_INCOME_TOTAL", i));
+                inputs.Add(GetDouble(data, "SALARY_TO_INCOME_TOTAL", i));
+                inputs.Add(GetDouble(data, "EXPENSES_FIXED_TO_INCOME_TOTAL", i));
+                inputs.Add(GetDouble(data, "EXPENSES_PROPERTY_TO_EXPENSES_FIXED", i));
+                inputs.Add(GetDouble(data, "EXPENSES_LOAN_TO_EXPENSES_TOTAL", i));
+                inputs.Add(GetDouble(data, "EXPENSES_LOAN_TO_INCOME_TOTAL", i));
+                inputs.Add(GetDouble(data, "EXPENSES_PROPERTY_LOAN_TO_EXPENSES_TOTAL", i));
+                inputs.Add(GetDouble(data, "EXPENSES_PROPERTY_LOAN_TO_INCOME_TOTAL", i));
+                inputs.Add(GetDouble(data, "DEBT_MORTGAGE_TO_INCOME_TOTAL", i) / 100.0);
+                inputs.Add(GetDouble(data, "DEBT_TOTAL_TO_INCOME_TOTAL", i) / 100.0);
+                inputs.Add(GetDouble(data, "CHILDREN_TO_ADULTS", i) / 2.0);
+                inputs.Add(GetDouble(data, "AGE_DIFF", i) / 20.0);
+
 
                 result.Add(inputs.ToArray());
             }

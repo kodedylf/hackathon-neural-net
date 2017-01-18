@@ -24,7 +24,7 @@ namespace Hackathon
             ActivationNetwork network;
             if (args.Length == 0)
             {
-                network = new ActivationNetwork(new SigmoidFunction(), inputs[0].Length, inputs[0].Length, 8, outputs[0].Length);
+                network = new ActivationNetwork(new SigmoidFunction(), inputs[0].Length, inputs[0].Length, outputs[0].Length);
                 var teacher = new ParallelResilientBackpropagationLearning(network);
                 teacher.Reset(0.1);
                 for (int i = 0; i < 1000; i++)

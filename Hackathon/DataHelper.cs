@@ -71,6 +71,15 @@ namespace Hackathon
                 inputs.Add(Math.Min(1.0, ((double)GetDouble(data, "DEBT_BANK_CURRENT", i)) / 300000));
                 inputs.Add(Math.Min(1.0, ((double)GetDouble(data, "DEBT_OTHER_CURRENT", i)) / 300000));
                 inputs.Add(Math.Min(1.0, ((double)GetDouble(data, "DEBT_CURRENT_REPAYMENT", i)) / 2000000));
+                inputs.Add(Math.Min(1.0, ((double)GetInt(data, "EXPENSES_FIXED_TOTAL", i)) / 30000));
+                inputs.Add(Math.Min(1.0, ((double)GetInt(data, "EXPENSES_FIXED_PROPERTY", i)) / 10000));
+                inputs.Add(Math.Min(1.0, ((double)GetInt(data, "EXPENSES_FIXED_NEW_LOANS", i)) / 20000));
+                inputs.Add(Math.Min(1.0, ((double)GetInt(data, "EXPENSES_INSURANCE_TOTAL", i)) / 5000));
+                inputs.Add(Math.Min(1.0, ((double)GetInt(data, "LOANS_NEW_MORTGAGE_PAYMENT_INTEREST", i)) / 20000));
+                inputs.Add(Math.Min(1.0, ((double)GetInt(data, "LOANS_NEW_MORTGAGE_PAYMENT_TOTAL", i)) / 25000));
+                inputs.Add(Math.Min(1.0, ((double)GetInt(data, "LOANS_NEW_TOPUP_PAYMENT_TOTAL", i)) / 500000));
+                inputs.Add(Math.Min(1.0, ((double)GetInt(data, "LOANS_WITH_IO", i)) / 5));
+
 
 
                 // calculated values

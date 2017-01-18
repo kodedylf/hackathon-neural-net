@@ -14,7 +14,8 @@ namespace Hackathon
         {
             double cutoff = 0.5;
 
-            var csvReader = new CsvReader(@"..\..\..\HACKATHON_2_CREDIT_MODEL_INPUTS_TRAINING.csv");
+            var csvReader = new CsvReader(@"..\..\..\HACKATHON_2_CREDIT_MODEL_INPUTS_HOULDOUT.csv");
+            // var csvReader = new CsvReader(@"..\..\..\HACKATHON_2_CREDIT_MODEL_INPUTS_TRAINING.csv");
             var data = csvReader.ReadFile();
             var inputs = DataHelper.CreateInputs(data);
             var outputs = DataHelper.CreateOutputs(data);

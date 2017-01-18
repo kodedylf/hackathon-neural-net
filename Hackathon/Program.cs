@@ -10,6 +10,11 @@ namespace Hackathon
     {
         static void Main(string[] args)
         {
+            var csvReader = new CsvReader(@"HACKATHON_2_CREDIT_MODEL_INPUTS.csv");
+            var data = csvReader.ReadFile();
+            Console.WriteLine("test");
         }
+
+
     }
 }

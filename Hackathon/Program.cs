@@ -18,17 +18,42 @@ namespace Hackathon
             var outputs = DataHelper.CreateOutputs(data);
             double error = 0.0;
 
-            ActivationNetwork network = new ActivationNetwork(new SigmoidFunction(), 10, 10, 1);
-            var teacher = new ParallelResilientBackpropagationLearning(network);
-            teacher.Reset(0.1);
-            for (int i = 0; i < 100; i++)
+            ActivationNetwork network;
+            if (args.Length == 0)
             {
-                error = teacher.RunEpoch(inputs, outputs);
+                network = new ActivationNetwork(new SigmoidFunction(), inputs[0].Length, inputs[0].Length, outputs[0].Length);
+                var teacher = new ParallelResilientBackpropagationLearning(network);
+                teacher.Reset(0.1);
+                for (int i = 0; i < 1000; i++)
+                {
+                    error = teacher.RunEpoch(inputs, outputs);
+                }
+                network.Save(@"..\..\..\network.ai");
+            }
+            else
+            {
+                network = (ActivationNetwork)Network.Load(args[0]);
             }
 
-            Console.WriteLine(error);
+            int expectedNoGotNo = 0;
+            int expectedNoGotYes = 0;
+            int expectedYesGotYes = 0;
+            int expectedYesGotNo = 0;
+
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                var result = network.Compute(inputs[i]);
+                string expected = DataHelper.GetString(data, "FINANCIAL_DISTRESS", i + 1);
+                if (expected == "NO" && result[0] <= 0.5) expectedNoGotNo++;
+                if (expected == "NO" && result[0] > 0.5) expectedNoGotYes++;
+                if (expected == "YES" && result[0] <= 0.5) expectedYesGotNo++;
+                if (expected == "YES" && result[0] > 0.5) expectedYesGotYes++;
+            }
+
+            Console.WriteLine("Expected No. Got No..." + expectedNoGotNo);
+            Console.WriteLine("Expected No. Got Yes.." + expectedNoGotYes);
+            Console.WriteLine("Expected Yes. Got No.." + expectedYesGotNo);
+            Console.WriteLine("Expected Yes. Got Yes." + expectedYesGotYes);
         }
-
-
     }
 }

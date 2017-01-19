@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace Hackathon
 {
-    public static class AucCalculator
+    public class ApPair
     {
-        public class ApPair
-        {
-            public int predictedValue { get; set; }
-            public int actualValue { get; set; }
-        }
+        public int predictedValue { get; set; }
+        public int actualValue { get; set; }
+    }
+
+    public class AucCalculator
+    {
         // From 'AUC Calculation Check' post in IJCNN Social Network Challenge forum
         // Credit: B Yang - original C++ code
         public static double Auc(List<ApPair> ap)
